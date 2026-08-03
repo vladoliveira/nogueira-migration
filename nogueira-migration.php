@@ -174,11 +174,17 @@ class Nogueira_Migration_Command {
 		);
 
 
-		$progress =
-			\WP_CLI\Utils::make_progress_bar(
-				'Migrando produtos',
-				$total
-			);
+		$progress = null;
+
+if ( class_exists( 'WP_CLI\\Utils' ) ) {
+
+	$progress =
+		\WP_CLI\Utils::make_progress_bar(
+			'Migrando produtos',
+			$total
+		);
+
+}
 
 
 		$created = 0;
@@ -211,12 +217,16 @@ class Nogueira_Migration_Command {
 
 			}
 
-			$progress->tick();
+			if ( $progress ) {
+	$progress->tick();
+}
 
 		}
 
 
-		$progress->finish();
+		if ( $progress ) {
+	$progress->finish();
+}
 
 
 		WP_CLI::success(
